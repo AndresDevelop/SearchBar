@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
+import {ApiConsumer} from './Components/ApiConsumer/ApiConsumer';
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  RenderInfo = (info) =>(
+
+    info.map(datos =>(
+      <li>{datos.name}</li>
+    ))
+  )
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <ApiConsumer>
+          {({ loading, error, data }) => {
+            if (loading) {
+              return <h1>Loading timeline...</h1>;
+            }
+
+            if (error) {
+              return <h1>{error.message}</h1>;
+            }
+
+            return this.RenderInfo(data)
+          }}
+        </ApiConsumer>     
       </div>
     );
   }
