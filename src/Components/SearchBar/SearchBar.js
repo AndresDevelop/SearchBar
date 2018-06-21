@@ -1,9 +1,8 @@
+import React, { Component } from "react";
+import styled from "styled-components";
+import { ApiConsumer } from "../ApiConsumer/ApiConsumer";
 
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import {ApiConsumer} from '../ApiConsumer/ApiConsumer';
-
- const SearchInput = styled.input`
+const SearchInput = styled.input`
   border: 1px solid pink;
   background-color: blue;
   display: block;
@@ -16,7 +15,6 @@ import {ApiConsumer} from '../ApiConsumer/ApiConsumer';
     min-width: 300px;
     outline: none;
   }
-
 `;
 const Wrapper = styled.section`
   padding: 4em;
@@ -26,54 +24,36 @@ const Wrapper = styled.section`
 let array = [];
 
 class SearchBAr extends Component {
-
-  state ={
-
-    error:false, 
-    query:' ',
+  state = {
+    error: false,
+    query: " ",
     result: []
-  }
+  };
 
-
- 
-  handleQuery = (ev) =>(
-
+  handleQuery = ev =>
     this.setState({
       query: ev.target.value
+    });
 
-    }
-  
-  )
-  )
+  RenderInfo = info => {
+    const inputValue = this.state.query.toLowerCase();
+    const lenghtInput = this.state.query.length;
+
+    let array =
+      lenghtInput === 0
+        ? []
+        : info.filter(
+            lan => lan.name.toLowerCase().slice(0, lenghtInput) === inputValue
+          );
 
 
-
-
-  RenderInfo = (info) =>{
-
-  const inputValue = this.state.query.toLowerCase();
-  const lenghtInput = this.state.query.length;
-  
-  
-  const a = info.filter( lan =>(
-    lan.name.toLowerCase().slice(0, lenghtInput) === inputValue
-  ))
-
-  console.log(a)
-
-    return a.map( (countries, index) =>(
-
-      <h1 key={index} >{countries.name}</h1>
-    ))
-
-  }
+    return array.map((countries, index) => <h1 key={index}>{countries.name}</h1>);
+  };
   render() {
     return (
       <Wrapper>
-        <SearchInput placeholder = "Search"
-         onChange={this.handleQuery} 
-        ></SearchInput>
-         <ApiConsumer  >
+        <SearchInput placeholder="Search" onChange={this.handleQuery} />
+        <ApiConsumer>
           {({ loading, error, data }) => {
             if (loading) {
               return <h1>Loading timeline...</h1>;
@@ -87,7 +67,6 @@ class SearchBAr extends Component {
           }}
         </ApiConsumer>
       </Wrapper>
-      
     );
   }
 }
