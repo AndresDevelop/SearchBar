@@ -1,14 +1,24 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { ApiConsumer } from "../ApiConsumer/ApiConsumer";
 
 const SearchInput = styled.input`
-  border: 1px solid #efefef;
+  border: none;
   box-sizing: border-box;
-  background-color: #fafafa;
+  background-color: #f5f5f5;
   display: block;
-  min-width: 300px;
+  width: 0px;
   padding: 8px 16px;
+  border-bottom:0px;
+  transition: width 250ms ease, border-bottom 250ms ease;
+  &:active,
+  &:focus {
+    width: 300px;
+    outline: none;
+    border-bottom:1px solid blue;
+
+  }
+
 `;
 
 const AutoComplete = styled.div`
@@ -19,10 +29,26 @@ const AutoComplete = styled.div`
   z-index: 99;
   right: 0;
   display: grid;
-  min-width: 300px;
+  max-width: 300px;
+  width: 300px;
   top: 55px;
   box-sizing: border-box;
   margin-right: 15%;
+  animation-name: ${keyframesAnimation};
+  animation-duration: 2s;
+`;
+
+const keyframesAnimation = keyframes`
+
+  0%{
+    transform: scaleY(0);
+  }
+
+  100%{
+
+    transform : scaleY(1);
+
+  }
 `;
 
 const Suggestion = styled.span`
@@ -30,6 +56,9 @@ const Suggestion = styled.span`
   cursor: pointer;
   background-color: #fff;
   border-bottom: 1px solid #d4d4d4;
+  animation-name: ${keyframesAnimation};
+  transform-origin: top center;
+  animation-duration: 0.5s;
 
   &:hover {
     background-color: #e9e9e9;
@@ -52,6 +81,12 @@ const Header = styled.header`
   max-width: 70%;
   height: 78px;
   margin: 0 auto;
+`;
+
+const IGIcon = styled.i`
+  position: absolute;
+  right: 0px;
+  color:blue;
 `;
 
 const Hero = styled.img`
@@ -98,7 +133,13 @@ class SearchBAr extends Component {
         <div style={{ backgroundColor: "#f5f5f5" }}>
           <Header>
             <Logo src="http://interbrand.com/assets/00000001535.png" />
-            <SearchInput placeholder="Search" onChange={this.handleQuery} />
+
+            <SearchInput
+              placeholder="Search for DR Name, Symbol or Country and people"
+              type="search"
+              onChange={this.handleQuery}
+            />
+            <IGIcon className="fa fa-search" />
           </Header>
         </div>
 
