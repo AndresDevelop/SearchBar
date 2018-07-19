@@ -135,7 +135,7 @@ class SearchBAr extends Component {
             <Logo src="http://interbrand.com/assets/00000001535.png" />
 
             <SearchInput
-              placeholder="Search for DR Name, Symbol or Country"
+              placeholder="Search for DR Name, Symbol or Country and people"
               type="search"
               onChange={this.handleQuery}
             />
